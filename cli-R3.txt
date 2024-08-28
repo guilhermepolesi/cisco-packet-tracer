@@ -1,0 +1,36 @@
+Router>enable
+! Enter privileged EXEC mode
+Router#configure terminal
+! Enter global configuration mode
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname R3
+! Set the hostname of the router to "R3"
+R3(config)#interface g0/0
+! Enter interface configuration mode for GigabitEthernet0/0
+R3(config-if)#ip address 10.2.2.1 255.255.255.252
+! Assign IP address 10.2.2.1 with a subnet mask of 255.255.255.252 to interface GigabitEthernet0/0
+R3(config-if)#no shutdown
+! Enable the interface GigabitEthernet0/0
+R3(config-if)#exit
+! Exit interface configuration mode
+R3(config)#interface g0/1
+! Enter interface configuration mode for GigabitEthernet0/1
+R3(config-if)#ip address 192.168.3.1 255.255.255.0
+! Assign IP address 192.168.3.1 with a subnet mask of 255.255.255.0 to interface GigabitEthernet0/1
+R3(config-if)#no shutdown
+! Enable the interface GigabitEthernet0/1
+R3(config-if)#exit
+! Exit interface configuration mode
+R3(config)#router ospf 1
+! Enter OSPF configuration mode, process ID 1
+R3(config-router)#network 10.2.2.0 0.0.0.3 area 0
+! Define OSPF network 10.2.2.0/30 in area 0
+R3(config-router)#network 192.168.3.0 0.0.0.255 area 0
+! Define OSPF network 192.168.3.0/24 in area 0
+R3(config-router)#passive-interface GigabitEthernet0/1
+! Set GigabitEthernet0/1 as passive-interface in OSPF
+R3(config-router)#exit
+! Exit OSPF configuration mode
+R3(config)#exit
+! Exit global configuration mode
+

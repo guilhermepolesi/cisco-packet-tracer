@@ -1,0 +1,107 @@
+R1#en
+! Enter privileged EXEC mode
+
+R1#conf t
+! Enter global configuration mode
+Enter configuration commands, one per line.  End with CNTL/Z.
+
+R1(config)#ip domain-name netsec.com
+! Set the domain name of the router to "netsec.com"
+
+R1(config)#username admin privilege 15 secret admin12345
+! Create a new user account "admin" with privilege level 15 and the secret password "admin12345"
+
+R1(config)#exit
+! Exit global configuration mode
+R1#
+
+R1#show running-config | include username
+! Display the current running configuration and filter to show only the username lines
+username admin privilege 15 secret 5 $1$mERr$.1hQMsGovt4kiPc0gMN7K.
+! Display of the encrypted secret password for "admin"
+username user01 secret 5 $1$mERr$AAEJVg9OAgW/Zn59wtI4d/
+! Display of the encrypted secret password for "user01"
+
+R1#exit
+! Exit privileged EXEC mode
+
+Username: user01
+! User is prompted to enter the username
+
+Password: 
+! User is prompted to enter the password
+
+R1>en
+! Enter privileged EXEC mode again
+
+Password: 
+! User is prompted to enter the enable password
+
+R1#conf t
+! Enter global configuration mode again
+Enter configuration commands, one per line.  End with CNTL/Z.
+
+R1(config)#line vty 0 4
+! Enter line configuration mode for vty lines 0 to 4
+
+R1(config-line)#privilege level 15
+! Set privilege level 15 for vty lines 0 to 4
+
+R1(config-line)#login local
+! Configure vty lines to use local login with the created user accounts
+
+R1(config-line)#transport input ssh
+! Allow only SSH connections on the vty lines
+
+R1(config-line)#exit
+! Exit line configuration mode
+
+R1(config)#crypto key zeroize rsa
+! Remove existing RSA keys (if any)
+
+% No Signature RSA Keys found in configuration.
+! Message indicating that no RSA keys were found to remove
+
+R1(config)#crypto key generate rsa general-keys modulus 1024
+! Generate RSA keys with a modulus size of 1024 bits
+
+The name for the keys will be: R1.netsec.com
+! The generated keys will be named "R1.netsec.com"
+
+% The key modulus size is 1024 bits
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+! System message indicating that 1024-bit RSA keys are being generated
+
+*Mar 1 1:36:58.978: %SSH-5-ENABLED: SSH 1.99 has been enabled
+! SSH version 1.99 has been enabled on the router
+
+R1(config)#ip ssh version 2
+! Configure the router to use SSH version 2
+
+R1(config)#exit
+! Exit global configuration mode
+R1#
+
+%SYS-5-CONFIG_I: Configured from console by console
+! System message indicating configuration changes made from the console
+
+R1#show ip ssh
+! Display the current SSH configuration
+SSH Enabled - version 2.0
+! SSH version 2.0 is enabled
+Authentication timeout: 120 secs; Authentication retries: 3
+! Default SSH settings: 120 seconds authentication timeout and 3 retries
+
+R1#conf t
+! Enter global configuration mode again
+Enter configuration commands, one per line.  End with CNTL/Z.
+
+R1(config)#ip ssh time-out 90
+! Set SSH authentication timeout to 90 seconds
+
+R1(config)#ip ssh authentication-retries 2
+! Set SSH authentication retries to 2 attempts
+
+R1# copy running-config startup-config
+! Save the running configuration to the startup configuration
+

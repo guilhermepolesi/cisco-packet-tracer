@@ -1,0 +1,39 @@
+C:\>ssh -l admin 192.168.1.1
+! Attempt to establish an SSH connection to the router R1 with the username "admin"
+
+Password: 
+! User is prompted to enter the password
+
+Unauthorized access strictly prohibited!
+! The MOTD banner is displayed upon successful connection
+
+R1#
+! SSH connection to R1 is successful, and the user is in privileged EXEC mode
+
+R1#show users
+! Display the current users connected to the router
+
+    Line       User       Host(s)              Idle       Location
+*390 vty 0     admin      idle                 00:00:00 
+! The user "admin" is connected on vty line 0 with no idle time
+
+  Interface    User               Mode         Idle     Peer Address
+! No additional users or connections are displayed
+
+R1#exit
+! Exit privileged EXEC mode and terminate the SSH session
+
+[Connection to 192.168.1.1 closed by foreign host]
+! The SSH connection to R1 is closed by the remote host
+
+C:\>telnet 192.168.1.1
+! Attempt to establish a Telnet connection to the router R1
+
+Trying 192.168.1.1 ...Open
+! The connection attempt is made, but the connection is immediately closed
+
+[Connection to 192.168.1.1 closed by foreign host]
+! The Telnet connection to R1 is closed by the remote host
+
+C:\>
+

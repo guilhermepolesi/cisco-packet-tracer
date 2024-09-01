@@ -8,12 +8,16 @@ R2>
 
 R1(config)#line vty 0 4
 ! Enter line configuration mode for vty lines 0 to 4
+
 R1(config-line)#password ciscovtypass
 ! Set the vty lines password to "ciscovtypass"
+
 R1(config-line)#exec-timeout 5 0
 ! Set the vty lines exec timeout to 5 minutes
+
 R1(config-line)#transport input telnet
 ! Allow only Telnet connections on the vty lines
+
 R1(config-line)#login
 ! Enable login on vty lines
 
@@ -27,6 +31,7 @@ User Access Verification
 Password: 
 R1>enable
 ! Enter privileged EXEC mode
+
 Password: 
 R1#show run
 ! Display the running configuration
@@ -37,12 +42,16 @@ Current configuration : 1140 bytes
 !
 version 15.1
 ! Cisco IOS version 15.1
+
 no service timestamps log datetime msec
 ! Disable logging of timestamps for log messages
+
 no service timestamps debug datetime msec
 ! Disable logging of timestamps for debug messages
+
 no service password-encryption
 ! Disable password encryption in the configuration
+
 security passwords min-length 10
 ! Set the minimum password length to 10 characters
 !
@@ -59,11 +68,13 @@ ip cef
 
 R1(config)#service password-encryption
 ! Encrypt all passwords in the configuration
+
 R1#show run
 ! Display the running configuration
 
 R1(config)#banner motd $Unauthorized access strictly prohibited!$
 ! Set the message of the day (MOTD) banner
+
 R1(config)#exit
 ! Exit global configuration mode
 
